@@ -146,15 +146,15 @@ _Eris is the MVP e-commerce platform for araggna.space._
 
 ```mermaid
 flowchart TD
-  A[🧍 User Login/Register] --> B[🛍 Pilih Produk dan SKU]
-  B --> C[➕ Tambah ke Cart (frontend)]
-  C --> D[🧾 Checkout]
-  D --> E[📦 Order Created (ORDER CREATED)]
-  E --> F[💰 Simulasi Pembayaran Manual]
-  F --> G[✔️ Mark as Paid (ORDER PAID)]
-  G --> H[🛠 Proses Admin (ORDER PROCESSED)]
-  H --> I[🚚 Order Dikirim (ORDER SHIPPED)]
-  I --> J[📬 Order Selesai (ORDER FINISH)]
+    A[🧍 User Login/Register] --> B[🛍 Pilih Produk dan SKU]
+B --> C[➕ Tambah Cart frontend]
+C --> D[🧾 Checkout]
+D --> E[📦 Order Created - ORDER CREATED]
+E --> F[💰 Simulasi Pembayaran Manual]
+F --> G[✔️ Mark as Paid - ORDER PAID]
+G --> H[🛠 Proses Admin - ORDER PROCESSED]
+H --> I[🚚 Order Dikirim - ORDER SHIPPED]
+I --> J[📬 Order Selesai - ORDER FINISH]
 ```
 
 ---
