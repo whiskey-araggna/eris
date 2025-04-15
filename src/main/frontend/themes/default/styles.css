@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+    --lumo-primary-color: #FF4D6D;
+    --lumo-secondary-color: #6C63FF;
+    --lumo-base-color: #FAF9F6;
+    --lumo-surface-color: #FFFFFF;
+    --lumo-body-text-color: #212121;
+    --lumo-secondary-text-color: #757575;
+    --lumo-success-color: #00B894;
+    --lumo-error-color: #D72638;
+    --lumo-font-family: 'Poppins', sans-serif;
+    --lumo-font-size: 16px;
+    --lumo-line-height: 1.5;
+}
+
+body[data-theme="dark"] {
+    /* Optional if you want to scope these variables only for dark-themed elements */
+    --lumo-primary-color: #FF4D6D;
+    --lumo-secondary-color: #6C63FF;
+    --lumo-base-color: #FAF9F6;
+    --lumo-surface-color: #FFFFFF;
+    --lumo-body-text-color: #212121;
+    --lumo-secondary-text-color: #757575;
+    --lumo-success-color: #00B894;
+    --lumo-error-color: #D72638;
+}
+

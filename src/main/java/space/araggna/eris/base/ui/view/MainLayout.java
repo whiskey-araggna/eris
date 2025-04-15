@@ -18,8 +18,11 @@ import com.vaadin.flow.server.menu.MenuConfiguration;
 import com.vaadin.flow.server.menu.MenuEntry;
 
 import static com.vaadin.flow.theme.lumo.LumoUtility.*;
+import com.vaadin.flow.theme.lumo.Lumo;
+import jakarta.annotation.security.PermitAll;
 
 @Layout
+@PermitAll
 public final class MainLayout extends AppLayout {
 
     MainLayout() {

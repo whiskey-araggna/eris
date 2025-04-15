@@ -1,6 +1,6 @@
 package space.araggna.eris.taskmanagement.domain;
 
-import space.araggna.eris.base.domain.AbstractEntity;
+import space.araggna.eris.base.domain.entity.AbstractEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import org.jspecify.annotations.Nullable;
@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "task")
-public class Task extends AbstractEntity<Long> {
+public class Task {
 
     public static final int DESCRIPTION_MAX_LENGTH = 255;
 
@@ -29,11 +29,6 @@ public class Task extends AbstractEntity<Long> {
     @Column(name = "due_date")
     @Nullable
     private LocalDate dueDate;
-
-    @Override
-    public @Nullable Long getId() {
-        return id;
-    }
 
     public String getDescription() {
         return description;
