@@ -1,6 +1,7 @@
 package space.araggna.eris.base.ui.view;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.avatar.Avatar;
 import com.vaadin.flow.component.avatar.AvatarVariant;
@@ -14,18 +15,23 @@ import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.sidenav.SideNav;
 import com.vaadin.flow.component.sidenav.SideNavItem;
 import com.vaadin.flow.router.Layout;
+import com.vaadin.flow.server.auth.AnonymousAllowed;
 import com.vaadin.flow.server.menu.MenuConfiguration;
 import com.vaadin.flow.server.menu.MenuEntry;
 
 import static com.vaadin.flow.theme.lumo.LumoUtility.*;
-import com.vaadin.flow.theme.lumo.Lumo;
-import jakarta.annotation.security.PermitAll;
+
+import com.vaadin.flow.spring.security.AuthenticationContext;
 
 @Layout
-@PermitAll
+@AnonymousAllowed
 public final class MainLayout extends AppLayout {
 
-    MainLayout() {
+    AuthenticationContext authenticationContext;
+
+    MainLayout(AuthenticationContext authenticationContext) {
+        this.authenticationContext = authenticationContext;
+
         setPrimarySection(Section.DRAWER);
         addToDrawer(createHeader(), new Scroller(createSideNav()), createUserMenu());
     }
@@ -73,9 +79,13 @@ public final class MainLayout extends AppLayout {
         userMenuItem.add("John Smith");
         userMenuItem.getSubMenu().addItem("View Profile");
         userMenuItem.getSubMenu().addItem("Manage Settings");
-        userMenuItem.getSubMenu().addItem("Logout");
+        userMenuItem.getSubMenu().addItem("Logout", e -> logoutProcess());
 
         return userMenu;
+    }
+
+    private void logoutProcess() {
+        authenticationContext.logout();
     }
 
 }

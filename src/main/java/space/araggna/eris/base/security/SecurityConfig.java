@@ -30,7 +30,7 @@ public class SecurityConfig extends VaadinWebSecurity {
         );
 
         super.configure(http);
-        setLoginView(http, LoginView.class);
+        setLoginView(http, LoginView.class, "/login");
     }
 
     @Bean

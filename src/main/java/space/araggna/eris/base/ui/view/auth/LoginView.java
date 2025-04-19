@@ -13,6 +13,7 @@ public class LoginView extends LoginOverlay implements BeforeEnterObserver {
     public LoginView() {
         setAction("login");
         setOpened(true);
+        setForgotPasswordButtonVisible(true);
 
     }
 
