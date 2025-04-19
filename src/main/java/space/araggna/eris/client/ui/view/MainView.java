@@ -11,6 +11,8 @@ import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.progressbar.ProgressBar;
+import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.PreserveOnRefresh;
 import com.vaadin.flow.router.Route;
@@ -33,6 +35,8 @@ public class MainView extends VerticalLayout {
     private final FlexLayout productContainer = new FlexLayout();
     private final ProgressBar progressBar = new ProgressBar();
 
+    private TextField searchField = new TextField();
+
     private final int PAGE_SIZE = 20;
     private int currentPage = 0;
     private boolean loading = false;
@@ -45,10 +49,18 @@ public class MainView extends VerticalLayout {
 
         setSizeFull();
         configureUI();
-        loadProducts();
+        loadProducts(searchField.getValue());
     }
 
     private void configureUI() {
+
+        searchField = new TextField();
+        searchField.setPlaceholder("Search something here");
+        searchField.setPrefixComponent(LumoIcon.SEARCH.create());
+        searchField.setClearButtonVisible(true);
+        searchField.setValueChangeMode(ValueChangeMode.EAGER);
+        searchField.addValueChangeListener(event -> loadProducts(event.getValue()));
+
         scroller.setSizeFull();
         scroller.setContent(productContainer);
 
@@ -59,7 +71,8 @@ public class MainView extends VerticalLayout {
 
         progressBar.setIndeterminate(true);
         progressBar.setVisible(false);
-        add(scroller, progressBar);
+
+        add(searchField, scroller, progressBar);
 
         scroller.getElement().addEventListener("scroll", event -> {
 
@@ -68,22 +81,37 @@ public class MainView extends VerticalLayout {
             double clientHeight = scroller.getElement().getProperty("clientHeight", 0.0);
 
             if (!loading && !allLoaded && (scrollTop + clientHeight + 50 >= scrollHeight)) {
-                loadProducts();
+                loadProducts(searchField.getValue());
             }
 
         }).debounce(200);
     }
 
-    private void loadProducts() {
+    private void loadProducts(String search) {
+        productContainer.removeAll();
+
         loading = true;
+        boolean searching = false;
+
         progressBar.setVisible(true);
 
-        List<ErisProduct> productList = productService.list(PageRequest.of(currentPage, PAGE_SIZE));
+        List<ErisProduct> productList;
+
+        if (!search.isEmpty()) {
+            productList = productService.search(search, PageRequest.of(0, PAGE_SIZE));
+            searching = true;
+            currentPage = 0;
+        } else {
+            productList = productService.list(PageRequest.of(currentPage, PAGE_SIZE));
+        }
+
         if (productList.isEmpty()) {
             allLoaded = true;
         } else {
             productList.forEach(product -> productContainer.add(createProductCard(product)));
-            currentPage++;
+            if (!searching) {
+                currentPage++;
+            }
         }
 
         loading = false;
